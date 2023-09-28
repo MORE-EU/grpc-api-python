@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package grpc;
+
+service DataService {
+  rpc GetDatasetData(GetDatasetDataRequest) returns (DatasetDataResponse);
+  rpc CheckWashes(WashesRequest) returns (WashesResponse);
+  rpc CPDetection(CPDetectionRequest) returns (CPDetectionResponse);
+  rpc ExtractRains(ExtractRainsRequest) returns (ExtractRainsResponse);
+  rpc CalculatePowerIndex(CalculatePowerIndexRequest) returns (CalculatePowerIndexResponse);
+  rpc Forecasting(ForecastingRequest) returns (ForecastingResponse);
+  rpc EstimateYawMisalignment(EstimateYawMisalignmentRequest) returns (EstimateYawMisalignmentResponse);
+}
+
+message GetDatasetDataRequest {
+string data_id=1;
+}
+
+message DatasetDataResponse {
+  string data = 1;
+}
+
+message WashesRequest {
+  string dataset_id = 1;
+}
+
+message WashesResponse {
+  string washes = 1;
+}
+
+message CPDetectionRequest {
+  string dataset_id = 1;
+  string start_date = 2;
+  string end_date = 3;
+  int32 w_train = 4;
+  int32 wa1 = 5;
+  int32 wa2 = 6;
+  int32 wa3 = 7;
+  int32 thrsh = 8;
+  repeated int32 cp_starts = 9;
+  repeated int32 cp_ends = 10;
+}
+
+message CPDetectionResponse {
+  string result = 1;
+}
+
+message ExtractRainsRequest {
+  string dataset_id = 1;
+  string start_date = 2;
+  string end_date = 3;
+}
+
+message ExtractRainsResponse {
+  string result = 1;
+}
+
+message CalculatePowerIndexRequest {
+  string dataset_id = 1;
+  string start_date = 2;
+  string end_date = 3;
+  int32 weeks_train = 4;
+  repeated int32 cp_starts = 5;
+  repeated int32 cp_ends = 6;
+  bool query_modelar = 7;
+}
+
+message CalculatePowerIndexResponse {
+  string result = 1;
+}
+
+message ForecastingRequest {
+    string dataset_id=1;
+    string start_date=2;
+    string end_date=3;
+    int32 lags=4;
+    int32 future_steps=5;
+    bool query_modelar=6;
+}
+
+message ForecastingResponse {
+    string filename=1;}
+    
+message EstimateYawMisalignmentRequest {
+  string dataset_id = 1;
+  string start_date = 2;
+  string end_date = 3;
+  int32 window = 4;
+  bool query_modelar = 5;
+}
+
+message EstimateYawMisalignmentResponse {
+  string result = 1;
+}
